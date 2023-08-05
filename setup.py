@@ -14,7 +14,7 @@ setup(
     # 배포하는 패키지의 url을 적어줍니다. 보통 github 링크를 적습니다.
     url                 = 'https://github.com/ojw5014/pojw',
     # 배포하는 패키지의 다운로드 url을 적어줍니다.
-    download_url        = 'https://github.com/ojw5014/pojw',
+    download_url        = 'https://github.com/ojw5014/pojw.git',
     # 해당 패키지를 사용하기 위해 필요한 패키지를 적어줍니다. ex. install_requires= ['numpy', 'django']
     # 여기에 적어준 패키지는 현재 패키지를 install할때 함께 install됩니다.
     install_requires    =  [],
