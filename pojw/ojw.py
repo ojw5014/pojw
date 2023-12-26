@@ -55,6 +55,10 @@ def Send(*args):
                     m_anIds.append(int(arg))
                     strData = strData + strSep + str(int(arg))
             client.send(b'\x02' + strData.encode('utf-8') + b'\x03')
+def Send5(str):
+    strData = 's5,1000,0,' + str
+    print(strData)
+    client.send(b'\x02' + strData.encode('utf-8') + b'\x03')
 def is_all_numbers(*args):
     for item in args:
         if not isinstance(item, (int, float)):
@@ -121,3 +125,65 @@ def wait(nTime = 0):
             break
 
     CTmr.Destroy()
+def TorqOn(*args):
+    strRes = ""
+    if (len(args) <= 0):
+        strRes = "254:513:1"
+    else:
+        nIndex = 0
+        for id in args:
+            strRes = strRes + str(id) + ":513:1"
+            if ((nIndex > 0) and (nIndex < len(args) - 1)):
+                strRes = strRes + ","
+            nIndex = nIndex + 1
+    Send5(strRes)
+def TorqOff(*args):
+    strRes = ""
+    if (len(args) <= 0):
+        strRes = "254:513:1"
+    else:
+        nIndex = 0
+        for id in args:
+            strRes = strRes + str(id) + ":513:0"
+            if ((nIndex > 0) and (nIndex < len(args) - 1)):
+                strRes = strRes + ","
+            nIndex = nIndex + 1
+    Send5(strRes)
+def Test():
+    Connect()
+    TorqOn(1)
+    wait(1000)
+    TorqOff(1)
+    wait(1000)
+    Disconnect()
+def Test2():
+    ################################################
+    Connect()
+    ################################################
+    # TorqOn(1)
+    Send(1000, 0, '1:-40,13:40,14:-20')
+    wait()
+
+    # TorqOff(1)
+    Send(1000, 0, '1:-50,13,50,14,-30')
+    wait()
+    
+    # TorqOn(1)
+    Send(1000, 0, '1:0,13:0,14:0')
+    wait()
+    
+    # TorqOff(1)
+    ################################################
+    Disconnect()
+    ################################################
+#Test()
+
+url = "https://github.com/ojw5014/Released_DLL/blob/master/OpenJigWare.dll"
+response = requests.get(url)
+
+if response.status_code == 200:
+    with open("OpenJigWare.dll_", "wb") as f:
+        f.write(response.content)
+    print("파일 다운로드 완료")
+else:
+    print("파일 다운로드 실패")
